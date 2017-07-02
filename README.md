@@ -1,2 +1,3 @@
-# dev-containers
-Useful dev containers
+# Docker development containers
+
+The repository contains some useful `Dockerfile` definitions for runtime and development containers.
