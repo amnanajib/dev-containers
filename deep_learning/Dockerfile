@@ -2,12 +2,14 @@ FROM tensorflow/tensorflow:latest-gpu
 
 RUN add-apt-repository ppa:neovim-ppa/stable
 RUN apt-get update
+RUN apt-get install sudo -y
 RUN apt-get install neovim -y
 RUN apt-get install zsh -y
 RUN apt-get install wget -y
 RUN apt-get install python3-pip python3-dev python-pip -y
 RUN apt-get install git -y
 RUN apt-get install locales -y
+RUN apt-get install graphviz -y
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -17,7 +19,9 @@ RUN pip install virtualenv
 RUN pip install virtualenvwrapper
 
 RUN useradd -ms /bin/zsh dev
+RUN echo 'dev:dev' | chpasswd
 RUN usermod -a -G sudo dev
+RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 USER dev
 ENV HOME /home/dev
@@ -32,6 +36,7 @@ RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh \
 		&& pip install flake8 \
 		&& mkvirtualenv -p python3 python-deep \
 		&& workon python-deep \
+		&& pip install ipdb \
 		&& pip install tensorflow-gpu \
 		&& pip install keras \
 		&& pip install edward \
@@ -41,6 +46,7 @@ RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh \
 		&& pip install h5py \
 		&& pip install visdom \
 		&& pip install matplotlib \
+		&& pip install pydot \
 		&& pip install Pillow \
 		&& pip install seaborn \
 		&& pip install autopep8 \
