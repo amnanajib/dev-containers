@@ -1,5 +1,4 @@
 FROM nvidia/opengl:1.0-glvnd-devel-ubuntu16.04
-# ENV DEBIAN_FRONTEND noninteractive
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
 ENV NVIDIA_DRIVER_CAPABILITIES \
