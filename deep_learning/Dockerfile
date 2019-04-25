@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-gpu
+FROM tensorflow/tensorflow:1.13.1-gpu-py3
 
 RUN apt-get update
 RUN apt-get install sudo -y
@@ -7,7 +7,8 @@ RUN apt-get install wget -y
 RUN apt-get install python3-pip python3-dev python-pip -y
 RUN apt-get install git -y
 RUN apt-get install locales -y
-RUN apt-get install graphviz -y
+RUN apt-get install tmux -y
+RUN apt-get install vim -y
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -34,18 +35,18 @@ RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh \
 		&& pip install ipdb \
 		&& pip install tqdm \
 		&& pip install tensorflow-gpu \
-		&& pip install keras \
-		&& pip install edward \
+		&& pip install tensorpack \
+		&& pip install tensorflow_probability \
+		&& pip install tfquaternion \
+		&& pip install numpy-quaternion \
 		&& pip install sklearn \
 		&& pip install scipy \
 		&& pip install jupyter \
 		&& pip install h5py \
-		&& pip install visdom \
+		&& pip install docopt \
+		&& pip install python-box \
 		&& pip install matplotlib \
-		&& pip install pydot \
-		&& pip install Pillow \
 		&& pip install seaborn \
-		&& pip install autopep8 \
 		&& pip install virtualenv \
 		&& pip install virtualenvwrapper"
 RUN echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.zshrc
@@ -54,10 +55,14 @@ RUN echo "source ${HOME}/.virtualenvs/python-deep/bin/activate" >> ~/.zshrc
 RUN mkdir -p ${HOME}/workspace
 RUN git clone https://github.com/taimir/configs.git ${HOME}/workspace/configs
 RUN cp ${HOME}/workspace/configs/vim/.vimrc ${HOME}/.
+RUN cp ${HOME}/workspace/configs/zsh/.zshrc ${HOME}/.
+RUN cp ${HOME}/workspace/configs/tmux/.tmux.conf ${HOME}/.
 
 RUN mkdir -p ${HOME}/.vim/bundle
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ${HOME}/.vim/bundle/Vundle.vim
-RUN vim -c 'PluginInstall' -c 'qa!'
-RUN sed -i 's/robbyrussell/agnoster/g' ${HOME}/.zshrc
+RUN git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+RUN git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
 
 WORKDIR ${HOME}
