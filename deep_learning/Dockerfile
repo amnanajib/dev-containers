@@ -21,7 +21,6 @@ RUN useradd -ms /bin/zsh dev
 RUN echo 'dev:dev' | chpasswd
 RUN usermod -a -G sudo dev
 RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
 USER dev
 ENV HOME /home/dev
 
@@ -45,6 +44,8 @@ RUN /bin/bash -c "source /usr/local/bin/virtualenvwrapper.sh \
 		&& pip install h5py \
 		&& pip install docopt \
 		&& pip install python-box \
+		&& pip install jupyter \
+		&& pip install h5py \
 		&& pip install matplotlib \
 		&& pip install seaborn \
 		&& pip install virtualenv \
