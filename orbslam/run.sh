@@ -5,7 +5,4 @@ docker run --gpus=0 -it \
 	--net host \
 	--env="DISPLAY" \
 	--env="QT_X11_NO_MITSHM=1" \
-	dtam bash
-
-# run inside container
-# /root/OpenDTAM/build/a.out /root/OpenDTAM/Trajectory_30_seconds
+	taimir93/orbslam bash
