@@ -1,10 +1,17 @@
 from nvidia/cudagl:9.0-devel-ubuntu16.04
 
 # basic setup
-RUN apt-get -y update
+RUN apt-get update
 RUN apt-get -y install git
-RUN apt-get -y install vim
 RUN apt-get -y install wget
+RUN apt-get -y software-properties-common
+RUN add-apt-repository -y "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
+RUN add-apt-repository -y "ppa:jonathonf/vim"
+RUN apt-get -y install vim
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+RUN apt-get update
+RUN apt-get -y install clangd-10
+RUN cp /usr/bin/clangd-10 /usr/bin/clangd
 
 # dependencies
 ENV DEBIAN_FRONTEND noninteractive
